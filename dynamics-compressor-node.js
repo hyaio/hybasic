@@ -106,6 +106,16 @@ define(['require'], function() {
         args.hostInterface.setSaveState (saveState.bind(this));
         args.hostInterface.setHostCallback (onParmChange.bind(this));
 
+        var destructor = function () {
+
+            args.audioSources[0].disconnect();
+            this.compNode.disconnect();
+            this.compNode = null;
+
+        }.bind(this);
+
+        args.hostInterface.setDestructor (destructor);
+
         // Initialization made it so far: plugin is ready.
         args.hostInterface.setInstanceStatus ('ready');
     };
